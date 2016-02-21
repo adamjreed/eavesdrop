@@ -91,11 +91,12 @@ class UpdatePlaylist extends Command
                     'artist' => $playedSong['artist']
                 ]);
 
-                //TODO: prevent repeat play records in case the API results overlap by a play when the cron runs
-                $song->plays()->create([
-                    'song_id' => $song->id,
-                    'played_at' => $playedSong['played_at']
-                ]);
+                if(!$song->plays()->where('played_at', "=", $playedSong['played_at'])->first()) {
+                    $song->plays()->create([
+                        'song_id' => $song->id,
+                        'played_at' => $playedSong['played_at']
+                    ]);
+                }
             }
         } else {
             throw new \Exception('Playlist data in the JSON object was empty.');
