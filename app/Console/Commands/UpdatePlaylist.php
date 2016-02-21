@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
+use App\Song;
 
 class UpdatePlaylist extends Command
 {
@@ -80,10 +81,22 @@ class UpdatePlaylist extends Command
      * @throws \Exception
      */
     protected function _savePlaylist($body) {
-        $json = json_decode($body);
+        $json = json_decode($body, true);
 
         if(!empty($json['response'])) {
-            //do some stuff with the json body
+            foreach($json['response'] as $playedSong) {
+                $song = Song::firstOrCreate([
+                    'id' => $playedSong['sid'],
+                    'name' => $playedSong['song'],
+                    'artist' => $playedSong['artist']
+                ]);
+
+                //TODO: prevent repeat play records in case the API results overlap by a play when the cron runs
+                $song->plays()->create([
+                    'song_id' => $song->id,
+                    'played_at' => $playedSong['played_at']
+                ]);
+            }
         } else {
             throw new \Exception('Playlist data in the JSON object was empty.');
         }
