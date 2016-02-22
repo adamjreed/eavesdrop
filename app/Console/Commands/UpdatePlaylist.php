@@ -91,7 +91,6 @@ class UpdatePlaylist extends Command
                 ]);
 
                 $song = Song::firstOrCreate([
-                    'id' => $playedSong['sid'],
                     'name' => $playedSong['song'],
                     'artist_id' => $artist->id
                 ]);
