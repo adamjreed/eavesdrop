@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use App\Song;
+use App\Artist;
 
 class UpdatePlaylist extends Command
 {
@@ -85,10 +86,14 @@ class UpdatePlaylist extends Command
 
         if(!empty($json['response'])) {
             foreach($json['response'] as $playedSong) {
+                $artist = Artist::firstOrCreate([
+                    'name' => $playedSong['artist']
+                ]);
+
                 $song = Song::firstOrCreate([
                     'id' => $playedSong['sid'],
                     'name' => $playedSong['song'],
-                    'artist' => $playedSong['artist']
+                    'artist_id' => $artist->id
                 ]);
 
                 if(!$song->plays()->where('played_at', "=", $playedSong['played_at'])->first()) {
