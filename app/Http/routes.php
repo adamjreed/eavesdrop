@@ -1,5 +1,10 @@
 <?php
 
-Route::group(['middleware' => ['web']], function () {
-    Route::get('/latest', 'PlaylistController@latest');
+Route::get('/', function() {
+    return view('index');
+});
+
+// API ROUTES ==================================
+Route::group(array('prefix' => 'api'), function() {
+    Route::get('latest', 'PlaylistController@latest');
 });
