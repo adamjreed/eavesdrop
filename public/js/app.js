@@ -1,4 +1,4 @@
-var playlistApp = angular.module('playlistApp', ['mainCtrl', 'playlistService']);
+var playlistApp = angular.module('playlistApp', ['latestCtrl', 'latestService']);
 
 playlistApp.filter('playTime', function playTime($filter){
     return function(text){
