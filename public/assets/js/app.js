@@ -1,6 +1,9 @@
 var app = angular
     .module('app', [
+        'app.tabs',
         'app.latest',
+        'app.songs',
+        'app.artists',
         'ngRoute'
     ]);
 
@@ -11,7 +14,27 @@ app.filter('playTime', function playTime($filter){
     }
 });
 angular
+    .module('app.artists', []);
+angular
+    .module('app.songs', []);
+angular
     .module('app.latest', []);
+angular
+    .module('app.tabs', []);
+angular
+    .module('app.artists')
+    .controller('ArtistsController', ArtistsController);
+
+function ArtistsController($scope) {
+
+};
+angular
+    .module('app.songs')
+    .controller('SongsController', SongsController);
+
+function SongsController($scope) {
+
+};
 angular
     .module('app.latest')
     .controller('LatestController', LatestController);
@@ -45,6 +68,17 @@ function LatestController($scope, $interval, Latest) {
     $scope.loadLatestTracks();
 };
 angular
+    .module('app.tabs')
+    .controller('TabsController', TabsController);
+
+function TabsController($scope, $route) {
+    $scope.route = $route;
+
+    $scope.isTabActive = function(tab) {
+        return $scope.route.current.activeTab == tab;
+    }
+};
+angular
     .module('app.latest')
     .factory('Latest', Latest);
 
@@ -61,15 +95,25 @@ angular
     .config(routes);
 
 function routes($routeProvider, $locationProvider) {
-    $routeProvider.
-    when('/latest', {
-        templateUrl: 'app/modules/latest/latest.template.html',
-        controller: 'LatestController'
-    }).
-    otherwise({
-        redirectTo: '/latest'
-    });
+    $routeProvider
+        .when('/latest', {
+            templateUrl: 'app/modules/latest/latest.template.html',
+            controller: 'LatestController',
+            activeTab: 'latest'
+        })
+        .when('/songs', {
+            templateUrl: 'app/modules/songs/songs.template.html',
+            controller: 'SongsController',
+            activeTab: 'songs'
+        })
+        .when('/artists', {
+            templateUrl: 'app/modules/artists/artists.template.html',
+            controller: 'ArtistsController',
+            activeTab: 'artists'
+        })
+        .otherwise({
+            redirectTo: '/latest'
+        });
 
     $locationProvider.html5Mode(true);
 }
-//# sourceMappingURL=app.js.map
