@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function() {
-    return view('index');
+    return File::get(public_path() . '/app/index.html');
 });
 
 // API ROUTES ==================================

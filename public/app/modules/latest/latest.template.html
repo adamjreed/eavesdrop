@@ -1,0 +1,12 @@
+<div class="showing">
+    <span>Show Last:</span>
+    <select
+            ng-model="currentPeriod"
+            ng-change="changePeriod()"
+            ng-options="period.id as period.name for period in periods">
+    </select>
+</div>
+<p class="text-center" ng-show="loading">Loading...</p>
+<ul class="comment" ng-hide="loading">
+    <li ng-repeat="play in songs">{{play.song.name}} - {{play.song.artist.name}} - {{play.played_at | playTime}}</li>
+</ul>

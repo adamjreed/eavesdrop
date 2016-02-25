@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->command('playlist:update')
-            ->hourly()
+            ->everyMinute()
             ->appendOutputTo(storage_path('logs/playlist.log'));
     }
 }
