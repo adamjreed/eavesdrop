@@ -3,16 +3,22 @@
     <head> 
         <title>Eavesdrop</title>
         <base href="/">
+
+        <link rel="stylesheet" href="../assets/css/lib/vendor.css" />
+        <link rel="stylesheet" href="../assets/css/app.css" />
     </head>
     <body>
-        <nav>
-            <ul>
-                <li><a href="latest">Latest</a></li>
-                <li><a href="songs">Top Songs</a></li>
-                <li><a href="artists">Top Artists</a></li>
-            </ul>
+        <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="TabsController">
+            <div class="container">
+                <a class="navbar-brand" href="#">Eavesdrop</a>
+                <ul class="nav navbar-nav">
+                    <li ng-class="{ active : isTabActive('latest') }"><a href="latest">Latest</a></li>
+                    <li ng-class="{ active : isTabActive('songs') }"><a href="songs">Top Songs</a></li>
+                    <li ng-class="{ active : isTabActive('artist') }"><a href="artists">Top Artists</a></li>
+                </ul>
+            </div>
         </nav>
-        <div ng-view>
+        <div class="container" ng-view>
         </div>
 
         <script type="text/javascript" src="../assets/js/lib/vendor.js"></script>

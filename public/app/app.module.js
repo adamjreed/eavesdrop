@@ -1,6 +1,9 @@
 var app = angular
     .module('app', [
+        'app.tabs',
         'app.latest',
+        'app.songs',
+        'app.artists',
         'ngRoute'
     ]);
 

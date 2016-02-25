@@ -7,6 +7,6 @@
     </select>
 </div>
 <p class="text-center" ng-show="loading">Loading...</p>
-<ul class="comment" ng-hide="loading">
-    <li ng-repeat="play in songs">{{play.song.name}} - {{play.song.artist.name}} - {{play.played_at | playTime}}</li>
+<ul class="list-group" ng-hide="loading">
+    <li class="list-group-item" ng-repeat="play in songs">{{play.song.name}} - {{play.song.artist.name}}<span class="badge">{{play.played_at | playTime}}</span></li>
 </ul>
