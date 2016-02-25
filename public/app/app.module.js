@@ -1,6 +1,10 @@
-var playlistApp = angular.module('playlistApp', ['latestCtrl', 'latestService']);
+var app = angular
+    .module('app', [
+        'app.latest',
+        'ngRoute'
+    ]);
 
-playlistApp.filter('playTime', function playTime($filter){
+app.filter('playTime', function playTime($filter){
     return function(text){
         var  tempdate= new Date(text.replace(/-/g,"/"));
         return $filter('date')(tempdate, "h:mma");
