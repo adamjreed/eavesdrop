@@ -1,2 +1,2 @@
 angular
-    .module('app.artists', []);
+    .module('app.artists', ['app.tabs']);

@@ -8,6 +8,7 @@ var app = angular
         'ngRoute'
     ]);
 
+/** Filters **/
 app.filter('playTime', function playTime($filter){
     return function(text){
         var  tempdate= new Date(text.replace(/-/g,"/"));

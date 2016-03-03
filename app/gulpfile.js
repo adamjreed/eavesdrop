@@ -5,8 +5,9 @@ var less = require('gulp-less');
 gulp.task('scripts', function() {
     return gulp.src([
             'public/**/*module*.js',
-            'public/**/*controller*.js',
             'public/**/*service*.js',
+            'public/**/*directive*.js',
+            'public/**/*controller*.js',
             'public/**/*routes*.js'
         ])
         .pipe(concat('app.js'))
@@ -23,8 +24,12 @@ gulp.task('less', function() {
 
 gulp.task('vendor-js', function() {
     return gulp.src([
-         'bower_components/angular/angular.min.js',
-         'bower_components/angular-route/angular-route.min.js'
+        'bower_components/angular/angular.min.js',
+        'bower_components/angular-route/angular-route.min.js',
+        'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/bootstrap-select/dist/js/bootstrap-select.min.js',
+        'bower_components/bootstrap/dist/js/bootstrap.min.js'
+
     ])
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest('public/assets/js/lib'));
@@ -32,15 +37,23 @@ gulp.task('vendor-js', function() {
 
 gulp.task('vendor-css', function() {
     return gulp.src([
-            'bower_components/bootstrap/dist/css/bootstrap.min.css'
-        ])
-        .pipe(concat('vendor.css'))
-        .pipe(gulp.dest('public/assets/css/lib'));
+        'bower_components/bootstrap-select/dist/css/bootstrap-select.min.css',
+        'bower_components/bootstrap/dist/css/bootstrap.min.css'
+    ])
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest('public/assets/css/lib'));
+});
+
+gulp.task('vendor-fonts', function() {
+    return gulp.src([
+        'bower_components/bootstrap/fonts/*.{ttf,woff,woff2,eot,svg}'
+    ])
+    .pipe(gulp.dest('public/assets/css/fonts'));
 });
 
 gulp.task('default', ['scripts', 'less']);
 
-gulp.task('vendor', ['vendor-js', 'vendor-css']);
+gulp.task('vendor', ['vendor-js', 'vendor-css', 'vendor-fonts']);
 
 gulp.task('watch', function() {
     gulp.watch('public/**/*.js', ['scripts']);

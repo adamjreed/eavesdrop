@@ -4,6 +4,7 @@ angular
 
 function LatestController($scope, $interval, Latest) {
     $scope.loading = true;
+    $scope.activeTab = 'latest';
     $scope.currentPeriod = 90;
     $scope.interval = null;
     $scope.periods = [
