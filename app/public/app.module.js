@@ -8,10 +8,6 @@ var app = angular
         'ngRoute'
     ]);
 
-angular
-    .module('app.constants', [])
-    .constant('API_URL', 'http://api.eavesdrop.dev/');
-
 app.filter('playTime', function playTime($filter){
     return function(text){
         var  tempdate= new Date(text.replace(/-/g,"/"));
