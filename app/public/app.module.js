@@ -1,5 +1,6 @@
 var app = angular
     .module('app', [
+        'app.constants',
         'app.tabs',
         'app.latest',
         'app.songs',

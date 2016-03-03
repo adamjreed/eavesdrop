@@ -5,17 +5,17 @@ angular
 function routes($routeProvider, $locationProvider) {
     $routeProvider
         .when('/latest', {
-            templateUrl: 'app/modules/latest/latest.template.html',
+            templateUrl: 'modules/latest/latest.template.html',
             controller: 'LatestController',
             activeTab: 'latest'
         })
         .when('/songs', {
-            templateUrl: 'app/modules/songs/songs.template.html',
+            templateUrl: 'modules/songs/songs.template.html',
             controller: 'SongsController',
             activeTab: 'songs'
         })
         .when('/artists', {
-            templateUrl: 'app/modules/artists/artists.template.html',
+            templateUrl: 'modules/artists/artists.template.html',
             controller: 'ArtistsController',
             activeTab: 'artists'
         })

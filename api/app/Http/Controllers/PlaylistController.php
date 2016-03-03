@@ -22,12 +22,12 @@ class PlaylistController extends Controller
             $period = 90;
         } else {
             if(!$this->_validatePeriod($request->period)) {
-                return response()->json(['meta' => ['status' => 400], 'response' => 'Invalid period length specified.'], 400);
+                return response()->json(['meta' => ['status' => 400], 'response' => 'Invalid period length specified.'], 400)->setCallback($request->callback);
             }
             $period = $request->period;
         }
-
-        return response()->json(['meta' => ['status' => 200], 'response' => $this->plays->recent($period)->toArray()]);
+        
+        return response()->json(['meta' => ['status' => 200], 'response' => $this->plays->recent($period)->toArray()])->setCallback($request->callback);
     }
 
     protected function _validatePeriod($period) {

@@ -1,5 +1,6 @@
 var app = angular
     .module('app', [
+        'app.constants',
         'app.tabs',
         'app.latest',
         'app.songs',
@@ -16,9 +17,9 @@ app.filter('playTime', function playTime($filter){
 angular
     .module('app.artists', []);
 angular
-    .module('app.songs', []);
+    .module('app.latest', ['app.constants']);
 angular
-    .module('app.latest', []);
+    .module('app.songs', []);
 angular
     .module('app.tabs', []);
 angular
@@ -26,13 +27,6 @@ angular
     .controller('ArtistsController', ArtistsController);
 
 function ArtistsController($scope) {
-
-};
-angular
-    .module('app.songs')
-    .controller('SongsController', SongsController);
-
-function SongsController($scope) {
 
 };
 angular
@@ -68,6 +62,13 @@ function LatestController($scope, $interval, Latest) {
     $scope.loadLatestTracks();
 };
 angular
+    .module('app.songs')
+    .controller('SongsController', SongsController);
+
+function SongsController($scope) {
+
+};
+angular
     .module('app.tabs')
     .controller('TabsController', TabsController);
 
@@ -80,13 +81,13 @@ function TabsController($scope, $route) {
 };
 angular
     .module('app.latest')
-    .factory('Latest', Latest);
+    .factory('Latest',  ['$http', 'API_URL', Latest]);
 
-function Latest($http) {
+function Latest($http, API_URL) {
     return {
         // get the most recently played songs
         get : function(period) {
-            return $http.get('/api/latest?period=' + period);
+            return $http.jsonp(API_URL + 'v1/latest?period=' + period + "&callback=JSON_CALLBACK");
         }
     }
 };
@@ -97,17 +98,17 @@ angular
 function routes($routeProvider, $locationProvider) {
     $routeProvider
         .when('/latest', {
-            templateUrl: 'app/modules/latest/latest.template.html',
+            templateUrl: 'modules/latest/latest.template.html',
             controller: 'LatestController',
             activeTab: 'latest'
         })
         .when('/songs', {
-            templateUrl: 'app/modules/songs/songs.template.html',
+            templateUrl: 'modules/songs/songs.template.html',
             controller: 'SongsController',
             activeTab: 'songs'
         })
         .when('/artists', {
-            templateUrl: 'app/modules/artists/artists.template.html',
+            templateUrl: 'modules/artists/artists.template.html',
             controller: 'ArtistsController',
             activeTab: 'artists'
         })
