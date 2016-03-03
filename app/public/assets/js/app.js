@@ -8,6 +8,7 @@ var app = angular
         'ngRoute'
     ]);
 
+/** Filters **/
 app.filter('playTime', function playTime($filter){
     return function(text){
         var  tempdate= new Date(text.replace(/-/g,"/"));
@@ -15,19 +16,45 @@ app.filter('playTime', function playTime($filter){
     }
 });
 angular
-    .module('app.artists', []);
+    .module('app.artists', ['app.tabs']);
 angular
-    .module('app.latest', ['app.constants']);
+    .module('app.latest', ['app.constants', 'app.tabs']);
 angular
-    .module('app.songs', []);
+    .module('app.songs', ['app.tabs']);
 angular
     .module('app.tabs', []);
+angular
+    .module('app.latest')
+    .factory('Latest',  ['$http', 'API_URL', Latest]);
+
+function Latest($http, API_URL) {
+    return {
+        // get the most recently played songs
+        get : function(period) {
+            return $http.jsonp(API_URL + 'v1/latest?period=' + period + "&callback=JSON_CALLBACK");
+        }
+    }
+};
+angular
+    .module('app.tabs')
+    .directive('navigationTabs', navigationTabs);
+
+function navigationTabs() {
+    return {
+        restrict: 'E',
+        replace: false,
+        templateUrl: 'modules/tabs/tabs.template.html',
+        link: function(scope, elem, attrs) {
+            jQuery(elem).find('.selectpicker').selectpicker();
+        }
+    };
+};
 angular
     .module('app.artists')
     .controller('ArtistsController', ArtistsController);
 
 function ArtistsController($scope) {
-
+    $scope.activeTab = 'artists';
 };
 angular
     .module('app.latest')
@@ -35,6 +62,7 @@ angular
 
 function LatestController($scope, $interval, Latest) {
     $scope.loading = true;
+    $scope.activeTab = 'latest';
     $scope.currentPeriod = 90;
     $scope.interval = null;
     $scope.periods = [
@@ -66,30 +94,7 @@ angular
     .controller('SongsController', SongsController);
 
 function SongsController($scope) {
-
-};
-angular
-    .module('app.tabs')
-    .controller('TabsController', TabsController);
-
-function TabsController($scope, $route) {
-    $scope.route = $route;
-
-    $scope.isTabActive = function(tab) {
-        return $scope.route.current.activeTab == tab;
-    }
-};
-angular
-    .module('app.latest')
-    .factory('Latest',  ['$http', 'API_URL', Latest]);
-
-function Latest($http, API_URL) {
-    return {
-        // get the most recently played songs
-        get : function(period) {
-            return $http.jsonp(API_URL + 'v1/latest?period=' + period + "&callback=JSON_CALLBACK");
-        }
-    }
+    $scope.activeTab = 'songs';
 };
 angular
     .module('app')

@@ -1,0 +1,19 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Eavesdrop</a>
+        <ul class="nav navbar-nav">
+            <li ng-class="{ active : activeTab == 'latest' }"><a href="latest">Latest</a></li>
+            <li ng-class="{ active : activeTab == 'songs' }"><a href="songs">Top Songs</a></li>
+            <li ng-class="{ active : activeTab == 'artists' }"><a href="artists">Top Artists</a></li>
+        </ul>
+        <div class="nav navbar-nav navbar-right">
+            <select
+                    class="selectpicker show-tick"
+                    data-style="navbar-btn"
+                    ng-model="currentPeriod"
+                    ng-change="changePeriod()"
+                    ng-options="period.id as period.name for period in periods">
+            </select>
+        </div>
+    </div>
+</nav>

@@ -1,2 +1,2 @@
 angular
-    .module('app.songs', []);
+    .module('app.songs', ['app.tabs']);

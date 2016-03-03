@@ -3,5 +3,5 @@ angular
     .controller('SongsController', SongsController);
 
 function SongsController($scope) {
-
+    $scope.activeTab = 'songs';
 };
