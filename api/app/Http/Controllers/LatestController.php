@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class PlaylistController extends Controller
+class LatestController extends Controller
 {
     protected $plays;
     protected $periods = array(90, 180, 300, 480);
@@ -17,7 +17,7 @@ class PlaylistController extends Controller
         $this->plays = $playRepository;
     }
 
-    public function latest(Request $request) {
+    public function index(Request $request) {
         if(!$request->period) {
             $period = 90;
         } else {
