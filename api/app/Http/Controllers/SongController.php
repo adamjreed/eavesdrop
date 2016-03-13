@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\PlayRepository;
+use App\Repositories\SongRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Exception;
 
-class LatestController extends Controller
+class SongController extends Controller
 {
-    protected $plays;
-    protected $defaultPeriod = 90;
-    protected $periods = array(90, 180, 300, 480);
+    protected $songs;
+    protected $defaultPeriod = '24 hours';
+    protected $periods = array('24 hours', '1 week', '1 month', '1 year');
 
-    public function __construct(PlayRepository $playRepository) {
-        $this->plays = $playRepository;
+    public function __construct(SongRepository $songRepository) {
+        $this->songs = $songRepository;
     }
 
     public function index(Request $request) {
@@ -25,7 +25,7 @@ class LatestController extends Controller
             return response()
                 ->json([
                     'meta' => ['status' => 200],
-                    'response' => $this->plays->recent($period)->toArray()
+                    'response' => $this->songs->top($period)
                 ])
                 ->setCallback($request->callback);
         }catch(Exception $e) {

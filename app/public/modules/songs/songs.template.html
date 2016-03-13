@@ -1,2 +1,5 @@
 <navigation-tabs active-tab="songs"></navigation-tabs>
-<p>Coming soon!</p>
+<p class="text-center" ng-show="loading">Loading...</p>
+<ul class="list-group" ng-hide="loading">
+    <li class="list-group-item" ng-repeat="song in songs">{{song.name}} - {{song.artist}}<span class="badge">{{song.total_plays}}</span></li>
+</ul>
